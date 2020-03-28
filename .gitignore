@@ -30,3 +30,31 @@
 *.exe
 *.out
 *.app
+
+
+# CLion
+cmake-build-debug
+CMakeLists.txt
+.idea
+
+# Netbeans
+Makefile
+nbproject
+**/nbproject/private/
+**/nbproject/Makefile-*.mk
+**/nbproject/Package-*.bash
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+nbproject/private/
+nbactions.xml
+nb-configuration.xml
+*.mk
+
+# Divers
+*.pdf
+
+# MacOs
+.DS_Store
