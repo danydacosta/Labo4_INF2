@@ -34,9 +34,6 @@ ostream& operator<<(ostream& os, const Fraction<T>& rhs){
 }
 
 tmplt
-Fraction<T>::Fraction<T>(type n, type d) : numerateur(n), denominateur(d) {}
-
-tmplt
 Fraction<T>::operator float() const {}
 
 tmplt
