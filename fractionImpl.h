@@ -11,8 +11,6 @@
  Compilateur : MinGW-g++ 6.3.0
  -----------------------------------------------------------------------------------
  */
-#ifndef FRACTIONIMPL_H
-#define FRACTIONIMPL_H
 
 //
 // Created by Lev on 30.03.2020.
@@ -29,9 +27,7 @@
 using namespace std;
 
 tmplt
-ostream& operator<<(ostream& os, const Fraction<T>& rhs){
-
-}
+ostream& operator<<(ostream& os, const Fraction<T>& rhs){}
 
 tmplt
 Fraction<T>::operator float() const {}
@@ -43,7 +39,7 @@ tmplt
 Fraction<T> Fraction<T>::simplifier() const {}
 
 tmplt
-bool identite(const Fraction<T>& f) const {}
+bool Fraction<T>::identite(const Fraction<T>& f) const {}
 
 tmplt
 bool Fraction<T>::operator== (const Fraction<T>& rhs) const {}
