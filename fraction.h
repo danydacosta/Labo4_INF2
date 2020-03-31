@@ -27,13 +27,27 @@ class Fraction {
     * Surcharge de l'opérateur de flux pour affichage d'une fraction (non simplifié)
     */
    friend std::ostream& operator << <>(std::ostream& os, const Fraction<T>& rhs);
+
+    /**
+    * Surcharge de l'opérateur d'addition
+    * @param f la fraction avec laquelle effectuer l'addition
+    * @return La fraction représentant la somme
+    */
+    friend Fraction<T> operator + (const Fraction<T>& rhs) ;
+
+    /**
+    * Surcharge de l'opérateur de multiplication
+    * @param f la fraction avec laquelle effectuer la multiplication
+    * @return La fraction représentant le produit
+    */
+    friend Fraction<T> operator * (const Fraction<T>& rhs) const;
 public:
    /**
     * Crée une fraction
     * @param n le numérateur
     * @param d le dénominateur
     */
-   Fraction<T>(T n, T d) : numerateur(n), denominateur(d) { }
+   Fraction<T>(T n, T d);
    /**
     * Surcharge de l'opérateur de cast (float)
     * @return la valeur décimale en float de la fraction
@@ -62,24 +76,14 @@ public:
     * @return si oui ou non les fractions sont égales
     */
    bool operator == (const Fraction<T>& rhs) const;
-   /**
-    * Surcharge de l'opérateur d'addition
-    * @param f la fraction avec laquelle effectuer l'addition
-    * @return La fraction représentant la somme
-    */
-   Fraction<T> operator + (const Fraction<T>& rhs) const;
+
    /**
     * Surcharge de l'opérateur d'affectation composé +=
     * @param rhs la fraction avec laquelle effectuer l'addition
     * @return l'objet fraction courant dont on a ajouté rhs
     */
    Fraction<T>& operator += (const Fraction<T>& rhs);
-   /**
-    * Surcharge de l'opérateur de multiplication
-    * @param f la fraction avec laquelle effectuer la multiplication
-    * @return La fraction représentant le produit
-    */
-   Fraction<T> operator * (const Fraction<T>& rhs) const;
+
    /**
     * Surcharge de l'opérateur d'affectation composé *=
     * @param rhs la fraction avec laquelle effectuer la multiplication

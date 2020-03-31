@@ -19,40 +19,45 @@
 #include <iostream>
 #include <cmath>
 
-#define type T
-#define tmplt template<typename type>
-
 #ifndef FRACTIOIMPLN_H
 #define FRACTIONIMPL_H
 
 using namespace std;
 
-tmplt
+template<typename T>
 ostream& operator<<(ostream& os, const Fraction<T>& rhs){}
 
-tmplt
+template<typename T>
 Fraction<T> operator+ (Fraction<T> lhs, const Fraction<T>& rhs) {
     lhs += rhs;
     return lhs;
 }
 
-tmplt
+template<typename T>
 Fraction<T> operator* (Fraction<T> lhs, const Fraction<T>& rhs){
     lhs *= rhs;
     return lhs;
 }
 
-tmplt
+template<typename T>
+Fraction<T>::Fraction(T n, T d){
+    if(d <= 0)
+        throw (std::invalid_argument("Le denominateur doit etre positif"));
+    this->numerateur = n;
+    this->denominateur = d;
+}
+
+template<typename T>
 Fraction<T>::operator float() const {
 
 }
 
-tmplt
+template<typename T>
 Fraction<T>::operator double() const {
 
 }
 
-tmplt
+template<typename T>
 T pgcd(T a, T b){
     a = abs(a);
     b = abs(b);
@@ -65,20 +70,20 @@ T pgcd(T a, T b){
     }
 }
 
-tmplt
+template<typename T>
 Fraction<T> Fraction<T>::simplifier() const {
    T thisPgcd = pgcd<T>(numerateur, denominateur);
    Fraction<T> simpleFrac(numerateur/thisPgcd, denominateur/thisPgcd);
    return simpleFrac;
 }
 
-tmplt
+template<typename T>
 bool Fraction<T>::identite(const Fraction<T>& f) const {
     return this->numerateur == f.numerateur
     and this->denominateur == f.denominateur;
 }
 
-tmplt
+template<typename T>
 bool Fraction<T>::operator== (const Fraction<T>& rhs) const {
     Fraction<T> thisSimple  = this->simplifier();
     Fraction<T> rhsSimple = this->simplifier();
@@ -86,18 +91,18 @@ bool Fraction<T>::operator== (const Fraction<T>& rhs) const {
     thisSimple.denominateur == rhsSimple.denominateur;
 }
 
-tmplt
+template<typename T>
 T ppmc(T a, T b){
    return abs(a*b)/pgcd(a,b);
 }
 
-tmplt
+template<typename T>
 Fraction<T>& Fraction<T>::operator += (const Fraction<T>& rhs){
-    
+
 }
 
 
-tmplt
+template<typename T>
 Fraction<T>& Fraction<T>::operator *= (const Fraction<T>& rhs){
 
     Fraction<T> thisSimple = this->simplifier();
