@@ -11,6 +11,7 @@
  Compilateur : MinGW-g++ 6.3.0
  -----------------------------------------------------------------------------------
  */
+// TODO : ajouter les noexcep, documenter les exceptions
 #ifndef FRACTION_H
 #define FRACTION_H
 
