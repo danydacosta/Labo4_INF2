@@ -35,7 +35,7 @@ Fraction<T>::operator double() const {
 T plusGrandDiviseurCommun(T a, T b) {
    if (!b)
       return a;
-   return plusGrandDiviseurCommun(b, a % b);
+   return plusGrandDiviseurCommun(b, T(a % b));
 }
 
 template<typename T>
@@ -54,9 +54,19 @@ bool Fraction<T>::operator==(const Fraction<T> &rhs) const {
    return (float)*this == (float)rhs;
 }
 
+//TODO : revoir ces fonctions de débordement
 template<typename T>
 bool debordementAddition(T a, T b) {
+   if(a < 0)
+      return (std::numeric_limits<T>::min() + (-1 * a) < b);
    return (std::numeric_limits<T>::max() - a < b);
+}
+
+template<typename T>
+bool debordementMultiplication(T a, T b) {
+   if(a < 0)
+      return (std::numeric_limits<T>::min() / a < b);
+   return (std::numeric_limits<T>::max() / a < b);
 }
 
 template<typename T>
@@ -68,43 +78,50 @@ Fraction<T> &Fraction<T>::operator+=(const Fraction<T> &rhs) {
    // 12 / 5 += 15 / 5 => 12 + 15 / 5
    // 12 / 8 += 12 / 4 => pgdc(8, 4) : 4 => 4 * 8/4
    // 12 / 5 += 12 / 4 => pgdc(5, 4) : 1
-
+   Fraction<T> tmp = rhs.simplifier();
    // Les deux dénominateurs sont identiques, on peut facilement effectuer
-   // l'addition
-   if(denominateur == rhs.denominateur) {
-      Fraction<T> tmp1, tmp2;
+   // l'addition en additionnant leur numérateurs
+   if(denominateur == tmp.denominateur) {
       // Débordement lors de l'addition des numérateurs
-      if(debordementAddition(numerateur, rhs.numerateur)) {
-         tmp1 = rhs.simplifier();
-         tmp2 = simplifier();
-         if (debordementAddition(tmp1.numerateur, tmp2.numerateur))
-            throw std::out_of_range("Il y a debordement lors de l'addition des "
-                                    "numerateurs");
-         numerateur = tmp1.numerateur + tmp2.numerateur;
-      }
-      numerateur += rhs.numerateur;
-      return *this;
+      if(debordementAddition(numerateur, tmp.numerateur))
+         throw std::out_of_range("Il y a debordement lors de l'addition des "
+                                 "numerateurs");
+      numerateur += tmp.numerateur;
+      return *this = simplifier();
    // Les dénominateur sont multiples l'un de l'autre, on peut ajuster un pour
    // ensuite additionner l'autre
-   } else if(plusGrandDiviseurCommun(denominateur, rhs.denominateur) != 1) {
+   } else if(plusGrandDiviseurCommun(denominateur, tmp.denominateur) != 1) {
       // multiplier celui qui a le plus petit denominateur
-      if(denominateur == std::min(denominateur, rhs.denominateur)) {
-         T facteur = rhs.denominateur / denominateur;
+      if(denominateur == std::min(denominateur, tmp.denominateur)) {
+         T facteur = tmp.denominateur / denominateur;
+         if(debordementMultiplication(numerateur, facteur))
+            throw std::out_of_range("Il y a debordement lors de l'ajustement de "
+                                    "l'operande de gauche");
          numerateur *= facteur;
+         if(debordementMultiplication(denominateur, facteur))
+            throw std::out_of_range("Il y a debordement lors de l'ajustement de "
+                                    "l'operande de gauche");
          denominateur *= facteur;
-         numerateur += rhs.numerateur;
+         if(debordementAddition(numerateur, tmp.numerateur))
+            throw std::out_of_range("Il y a debordement lors de l'addition des "
+                                    "numerateurs");
+         numerateur += tmp.numerateur;
       } else {
-         T facteur = denominateur / rhs.denominateur;
-         numerateur += rhs.numerateur * facteur;
+         T facteur = denominateur / tmp.denominateur;
+         tmp.numerateur *= facteur;
+         if(debordementAddition(numerateur, tmp.numerateur))
+            throw std::out_of_range("Il y a debordement lors de l'addition des "
+                                    "numerateurs");
+         numerateur += tmp.numerateur;
       }
    // Les dénominateurs ne sont pas multiples l'un de l'autre, il faut ajuster
    // les deux membres
    } else {
-      numerateur *= rhs.denominateur;
-      numerateur += rhs.numerateur * denominateur;
-      denominateur *= rhs.denominateur;
+      numerateur *= tmp.denominateur;
+      numerateur += tmp.numerateur * denominateur;
+      denominateur *= tmp.denominateur;
    }
-   return *this;
+   return *this = simplifier();
 }
 
 template<typename T>

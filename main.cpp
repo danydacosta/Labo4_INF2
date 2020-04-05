@@ -25,6 +25,9 @@ int main() {
       Fraction<int> f1(70, 7);
       cout << "f1 = " << f1 << endl;
       cout << "f1.simplifier() = " << f1.simplifier() << endl;
+      Fraction<int> f2(-70, 7);
+      cout << "f1 = " << f2 << endl;
+      cout << "f2.simplifier() = " << f2.simplifier() << endl;
       cout << "************************************" << endl;
    }
    {
@@ -46,16 +49,18 @@ int main() {
       cout << "************************************" << endl;
    }
    {
-      cout << "******** Test de l'opérateur += ********" << endl;
-      Fraction<short> f1(126, 4);
-      Fraction<short> f2(2, 4);
+      cout << "******** Test de l'operateur += ********" << endl;
+      Fraction<short> f1(-16382, 2);
+      Fraction<short> f2(-3, 4);
       cout << "f1 = " << f1 << endl;
       cout << "f2 = " << f2 << endl;
       try {
-         cout << "f1 += f2 : " << (f1 += f2) << endl;
+         cout << "f1 += f2 : ";
+         cout << (f1 += f2) << endl;
       } catch(out_of_range& e) {
          cout << e.what() << endl;
       }
+      cout << "f1 = " << f1 << endl;
       cout << "************************************" << endl;
    }
 
