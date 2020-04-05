@@ -29,6 +29,10 @@ class Fraction {
     */
    friend std::ostream& operator << <>(std::ostream& os, const Fraction<T>& rhs);
 public:
+    /**
+     * Constructeur par défault
+     */
+    Fraction<T>() = default;
    /**
     * Crée une fraction
     * @param n le numérateur

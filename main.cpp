@@ -47,11 +47,15 @@ int main() {
    }
    {
       cout << "******** Test de l'opérateur += ********" << endl;
-      Fraction<int> f1(12, 4);
-      Fraction<int> f2(12, 4);
+      Fraction<short> f1(126, 4);
+      Fraction<short> f2(2, 4);
       cout << "f1 = " << f1 << endl;
       cout << "f2 = " << f2 << endl;
-      cout << "f1 += f2 : " << (f1 += f2) << endl;
+      try {
+         cout << "f1 += f2 : " << (f1 += f2) << endl;
+      } catch(out_of_range& e) {
+         cout << e.what() << endl;
+      }
       cout << "************************************" << endl;
    }
 

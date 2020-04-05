@@ -14,6 +14,8 @@
 #ifndef FRACTIONIMPL_H
 #define FRACTIONIMPL_H
 
+#include <limits>
+
 #include "fraction.h"
 
 template<typename T>
@@ -53,18 +55,33 @@ bool Fraction<T>::operator==(const Fraction<T> &rhs) const {
 }
 
 template<typename T>
+bool debordementAddition(T a, T b) {
+   return (std::numeric_limits<T>::max() - a < b);
+}
+
+template<typename T>
 Fraction<T> &Fraction<T>::operator+=(const Fraction<T> &rhs) {
    // Attention aux débordements !
    // 1. Essayer d'additionner les deux membres
    // 2. Si débordement, essayer de simplifier le membre de droite
    // 3. Si après simplification, toujours débordement => exception
-   // 12 / 5 += 12 / 4 => pgdc(5, 4) : 1
+   // 12 / 5 += 15 / 5 => 12 + 15 / 5
    // 12 / 8 += 12 / 4 => pgdc(8, 4) : 4 => 4 * 8/4
+   // 12 / 5 += 12 / 4 => pgdc(5, 4) : 1
 
    // Les deux dénominateurs sont identiques, on peut facilement effectuer
    // l'addition
    if(denominateur == rhs.denominateur) {
-      // TODO : débordement
+      Fraction<T> tmp1, tmp2;
+      // Débordement lors de l'addition des numérateurs
+      if(debordementAddition(numerateur, rhs.numerateur)) {
+         tmp1 = rhs.simplifier();
+         tmp2 = simplifier();
+         if (debordementAddition(tmp1.numerateur, tmp2.numerateur))
+            throw std::out_of_range("Il y a debordement lors de l'addition des "
+                                    "numerateurs");
+         numerateur = tmp1.numerateur + tmp2.numerateur;
+      }
       numerateur += rhs.numerateur;
       return *this;
    // Les dénominateur sont multiples l'un de l'autre, on peut ajuster un pour
