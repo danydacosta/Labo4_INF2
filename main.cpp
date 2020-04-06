@@ -25,9 +25,14 @@ int main() {
       Fraction<int> f1(70, 7);
       cout << "f1 = " << f1 << endl;
       cout << "f1.simplifier() = " << f1.simplifier() << endl;
+      cout << "---" << endl;
       Fraction<int> f2(-70, 7);
       cout << "f1 = " << f2 << endl;
       cout << "f2.simplifier() = " << f2.simplifier() << endl;
+      cout << "---" << endl;
+      Fraction<int> f3(-127, 3);
+      cout << "f3 = " << f3 << endl;
+      cout << "f3.simplifier() = " << f3.simplifier() << endl;
       cout << "************************************" << endl;
    }
    {
@@ -50,8 +55,8 @@ int main() {
    }
    {
       cout << "******** Test de l'operateur += ********" << endl;
-      Fraction<short> f1(-16382, 2);
-      Fraction<short> f2(-3, 4);
+      Fraction<char> f1(126, 2);
+      Fraction<char> f2(1, 2);
       cout << "f1 = " << f1 << endl;
       cout << "f2 = " << f2 << endl;
       try {
@@ -61,6 +66,143 @@ int main() {
          cout << e.what() << endl;
       }
       cout << "f1 = " << f1 << endl;
+      cout << "---" << endl;
+      Fraction<char> f3(127, 2);
+      Fraction<char> f4(1, 2);
+      cout << "f3 = " << f3 << endl;
+      cout << "f4 = " << f4 << endl;
+      try {
+         cout << "f3 += f4 : ";
+         cout << (f3 += f4) << endl;
+      } catch(out_of_range& e) {
+         cout << e.what() << endl;
+      }
+      cout << "f3 = " << f3 << endl;
+      cout << "---" << endl;
+      Fraction<char> f5(1, 2);
+      Fraction<char> f6(5, 4);
+      cout << "f5 = " << f5 << endl;
+      cout << "f6 = " << f6 << endl;
+      try {
+         cout << "f5 += f6 : ";
+         cout << (f5 += f6) << endl;
+      } catch(out_of_range& e) {
+         cout << e.what() << endl;
+      }
+      cout << "f5 = " << f5 << endl;
+      cout << "---" << endl;
+      Fraction<char> f7(127, 4);
+      Fraction<char> f8(3, 2);
+      cout << "f7 = " << f7 << endl;
+      cout << "f8 = " << f8 << endl;
+      try {
+         cout << "f7 += f8 : ";
+         cout << (f7 += f8) << endl;
+      } catch(out_of_range& e) {
+         cout << e.what() << endl;
+      }
+      cout << "f7 = " << f7 << endl;
+      cout << "---" << endl;
+      Fraction<char> f9(5, 4);
+      Fraction<char> f10(4, 5);
+      cout << "f9 = " << f9 << endl;
+      cout << "f10 = " << f10 << endl;
+      try {
+         cout << "f9 += f10 : ";
+         cout << (f9 += f10) << endl;
+      } catch(out_of_range& e) {
+         cout << e.what() << endl;
+      }
+      cout << "f9 = " << f9 << endl;
+      cout << "---" << endl;
+      Fraction<char> f11(-127, 4);
+      Fraction<char> f12(4, 5);
+      cout << "f11 = " << f11 << endl;
+      cout << "f12 = " << f12 << endl;
+      try {
+         cout << "f11 += f12 : ";
+         cout << (f11 += f12) << endl;
+      } catch(out_of_range& e) {
+         cout << e.what() << endl;
+      }
+      cout << "f11 = " << f11 << endl;
+      cout << "************************************" << endl;
+   }
+   {
+      cout << "******** Test de l'operateur + ********" << endl;
+      Fraction<char> f1(126, 2);
+      Fraction<char> f2(1, 2);
+      cout << "f1 = " << f1 << endl;
+      cout << "f2 = " << f2 << endl;
+      try {
+         cout << "f1 + f2 = ";
+         cout << (f1 + f2) << endl;
+      } catch(out_of_range& e) {
+         cout << e.what() << endl;
+      }
+      cout << "---" << endl;
+      Fraction<char> f3(3, 6);
+      Fraction<char> f4(-128, 3);
+      cout << "f3 = " << f3 << endl;
+      cout << "f4 = " << f4 << endl;
+      try {
+         cout << "f3 + f4 = ";
+         cout << (f3 + f4) << endl;
+      } catch(out_of_range& e) {
+         cout << e.what() << endl;
+      }
+      cout << "************************************" << endl;
+   }
+   {
+      cout << "******** Test de l'operateur *= ********" << endl;
+      Fraction<char> f1(126, 2);
+      Fraction<char> f2(1, 2);
+      cout << "f1 = " << f1 << endl;
+      cout << "f2 = " << f2 << endl;
+      try {
+         cout << "f1 *= f2 : ";
+         cout << (f1 *= f2) << endl;
+      } catch(out_of_range& e) {
+         cout << e.what() << endl;
+      }
+      cout << "f1 = " << f1 << endl;
+      cout << "---" << endl;
+      Fraction<char> f3(126, 101);
+      Fraction<char> f4(1, 2);
+      cout << "f3 = " << f3 << endl;
+      cout << "f4 = " << f4 << endl;
+      try {
+         cout << "f3 *= f4 : ";
+         cout << (f3 *= f4) << endl;
+      } catch(out_of_range& e) {
+         cout << e.what() << endl;
+      }
+      cout << "f3 = " << f3 << endl;
+      cout << "************************************" << endl;
+   }
+   {
+      cout << "******** Test de l'operateur * ********" << endl;
+      Fraction<char> f1(126, 2);
+      Fraction<char> f2(1, 2);
+      cout << "f1 = " << f1 << endl;
+      cout << "f2 = " << f2 << endl;
+      try {
+         cout << "f1 * f2 = ";
+         cout << (f1 * f2) << endl;
+      } catch(out_of_range& e) {
+         cout << e.what() << endl;
+      }
+      cout << "---" << endl;
+      Fraction<char> f3(3, 6);
+      Fraction<char> f4(-127, 3);
+      cout << "f3 = " << f3 << endl;
+      cout << "f4 = " << f4 << endl;
+      try {
+         cout << "f3 * f4 = ";
+         cout << (f3 * f4) << endl;
+      } catch(out_of_range& e) {
+         cout << e.what() << endl;
+      }
       cout << "************************************" << endl;
    }
 
