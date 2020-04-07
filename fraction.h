@@ -38,7 +38,7 @@ public:
     * @param n le numérateur
     * @param d le dénominateur
     */
-   Fraction<T>(T n, T d) : numerateur(n), denominateur(d) { }
+   Fraction<T>(T n, T d);
    /**
     * Surcharge de l'opérateur de cast (float)
     * @return la valeur décimale en float de la fraction

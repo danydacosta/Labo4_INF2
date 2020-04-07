@@ -21,6 +21,32 @@ using namespace std;
 int main() {
    cout << "======== Debut du programme de test ========" << endl;
    {
+      cout << "******** Test du constructeur ********" << endl;
+      int n1 = 1, d1 = -3;
+      cout << "Test de construction de la fraction " << n1 << " / " << d1 << endl;
+      try {
+         Fraction<int> f1(1, -3);
+      } catch(invalid_argument& e) {
+         cout << e.what() << endl;
+      }
+      int n2 = 1, d2 = 0;
+      cout << "Test de construction de la fraction " << n2 << " / " << d2 << endl;
+      try {
+         Fraction<int> f1(1, 0);
+      } catch(invalid_argument& e) {
+         cout << e.what() << endl;
+      }
+      cout << "************************************" << endl;
+   }
+   {
+      cout << "******** Test de l'operateur de cast ********" << endl;
+      Fraction<int> f1(1, 3);
+      cout << "f1 = " << f1 << endl;
+      cout << "(float)f1 = " << (float)f1 << endl;
+      cout << "(double)f1 = " << (double)f1 << endl;
+      cout << "************************************" << endl;
+   }
+   {
       cout << "******** Test de la simplification ********" << endl;
       Fraction<int> f1(70, 7);
       cout << "f1 = " << f1 << endl;
@@ -62,7 +88,7 @@ int main() {
       try {
          cout << "f1 += f2 : ";
          cout << (f1 += f2) << endl;
-      } catch(out_of_range& e) {
+      } catch(overflow_error& e) {
          cout << e.what() << endl;
       }
       cout << "f1 = " << f1 << endl;
@@ -74,7 +100,7 @@ int main() {
       try {
          cout << "f3 += f4 : ";
          cout << (f3 += f4) << endl;
-      } catch(out_of_range& e) {
+      } catch(overflow_error& e) {
          cout << e.what() << endl;
       }
       cout << "f3 = " << f3 << endl;
@@ -86,7 +112,7 @@ int main() {
       try {
          cout << "f5 += f6 : ";
          cout << (f5 += f6) << endl;
-      } catch(out_of_range& e) {
+      } catch(overflow_error& e) {
          cout << e.what() << endl;
       }
       cout << "f5 = " << f5 << endl;
@@ -98,7 +124,7 @@ int main() {
       try {
          cout << "f7 += f8 : ";
          cout << (f7 += f8) << endl;
-      } catch(out_of_range& e) {
+      } catch(overflow_error& e) {
          cout << e.what() << endl;
       }
       cout << "f7 = " << f7 << endl;
@@ -110,7 +136,7 @@ int main() {
       try {
          cout << "f9 += f10 : ";
          cout << (f9 += f10) << endl;
-      } catch(out_of_range& e) {
+      } catch(overflow_error& e) {
          cout << e.what() << endl;
       }
       cout << "f9 = " << f9 << endl;
@@ -122,7 +148,7 @@ int main() {
       try {
          cout << "f11 += f12 : ";
          cout << (f11 += f12) << endl;
-      } catch(out_of_range& e) {
+      } catch(overflow_error& e) {
          cout << e.what() << endl;
       }
       cout << "f11 = " << f11 << endl;
@@ -137,7 +163,7 @@ int main() {
       try {
          cout << "f1 + f2 = ";
          cout << (f1 + f2) << endl;
-      } catch(out_of_range& e) {
+      } catch(overflow_error& e) {
          cout << e.what() << endl;
       }
       cout << "---" << endl;
@@ -148,7 +174,7 @@ int main() {
       try {
          cout << "f3 + f4 = ";
          cout << (f3 + f4) << endl;
-      } catch(out_of_range& e) {
+      } catch(overflow_error& e) {
          cout << e.what() << endl;
       }
       cout << "************************************" << endl;
