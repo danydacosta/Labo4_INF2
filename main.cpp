@@ -129,8 +129,8 @@ int main() {
       }
       cout << "f7 = " << f7 << endl;
       cout << "---" << endl;
-      Fraction<char> f9(5, 4);
-      Fraction<char> f10(4, 5);
+      Fraction<char> f9(1, 73);
+      Fraction<char> f10(1, 64);
       cout << "f9 = " << f9 << endl;
       cout << "f10 = " << f10 << endl;
       try {
