@@ -43,18 +43,20 @@ template<typename T>
 Fraction<T>::Fraction(T n, T d){
     if(d <= 0)
         throw (std::invalid_argument("Le denominateur doit etre positif"));
-    this->numerateur = n;
-    this->denominateur = d;
+    if(n < 0 and d < 0)
+        this->numerateur = -n;
+        this->denominateur = -d;
+
 }
 
 template<typename T>
 Fraction<T>::operator float() const {
-
+    return ((float) numerateur)/ ((float) denominateur);
 }
 
 template<typename T>
 Fraction<T>::operator double() const {
-
+    return ((double) numerateur/(double) denominateur);
 }
 
 template<typename T>
@@ -104,12 +106,10 @@ Fraction<T>& Fraction<T>::operator += (const Fraction<T>& rhs){
 
 template<typename T>
 Fraction<T>& Fraction<T>::operator *= (const Fraction<T>& rhs){
-
     Fraction<T> thisSimple = this->simplifier();
     Fraction<T> rhsSimple = rhs.simplifier();
     this->numerateur = thisSimple.numerateur * rhsSimple.numerateur;
     this->simplifier() = thisSimple.denominateur * thisSimple.denominateur;
-
     return this;
 
 };
