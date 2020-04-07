@@ -188,7 +188,7 @@ int main() {
       try {
          cout << "f1 *= f2 : ";
          cout << (f1 *= f2) << endl;
-      } catch(out_of_range& e) {
+      } catch(overflow_error& e) {
          cout << e.what() << endl;
       }
       cout << "f1 = " << f1 << endl;
@@ -200,7 +200,7 @@ int main() {
       try {
          cout << "f3 *= f4 : ";
          cout << (f3 *= f4) << endl;
-      } catch(out_of_range& e) {
+      } catch(overflow_error& e) {
          cout << e.what() << endl;
       }
       cout << "f3 = " << f3 << endl;
@@ -215,7 +215,7 @@ int main() {
       try {
          cout << "f1 * f2 = ";
          cout << (f1 * f2) << endl;
-      } catch(out_of_range& e) {
+      } catch(overflow_error& e) {
          cout << e.what() << endl;
       }
       cout << "---" << endl;
@@ -226,7 +226,7 @@ int main() {
       try {
          cout << "f3 * f4 = ";
          cout << (f3 * f4) << endl;
-      } catch(out_of_range& e) {
+      } catch(overflow_error& e) {
          cout << e.what() << endl;
       }
       cout << "************************************" << endl;
