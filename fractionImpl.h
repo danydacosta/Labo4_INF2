@@ -89,19 +89,11 @@ template<typename T>
 Fraction<T> &Fraction<T>::operator+=(const Fraction<T> &rhs) {
    Fraction<T> tmpMembreGauche = simplifier();
    Fraction<T> tmpMembreDroite = rhs.simplifier();
-   const std::string MSG_DEBORDEMENT_NUMERATEUR = "Il y a debordement lors de "
-                                                  "l'addition des numerateurs";
-   // Les deux dénominateurs sont identiques, on peut facilement effectuer
-   // l'addition en additionnant leur numérateurs
-   if(tmpMembreDroite.denominateur == tmpMembreGauche.denominateur) {
-      // Débordement lors de l'addition des numérateurs
-      if(debordementAddition(tmpMembreDroite.numerateur, tmpMembreGauche.numerateur))
-         throw std::overflow_error(MSG_DEBORDEMENT_NUMERATEUR);
-   } else
-   // Les dénominateur sont multiples l'un de l'autre, on peut ajuster un pour
-   // ensuite additionner l'autre
+   // Les dénominateur sont multiples l'un de l'autre mais pas égaux, on peut
+   // ajuster un pour ensuite additionner l'autre
    if(plusGrandDiviseurCommun(tmpMembreDroite.denominateur, tmpMembreGauche
-   .denominateur) != 1) {
+   .denominateur) != 1 && tmpMembreDroite.denominateur != tmpMembreGauche
+   .denominateur) {
       // le plus petit dénominateur est le membre de gauche
       if(tmpMembreGauche.denominateur  == std::min(tmpMembreGauche.denominateur,
             tmpMembreDroite.denominateur)) {
@@ -128,7 +120,7 @@ Fraction<T> &Fraction<T>::operator+=(const Fraction<T> &rhs) {
       }
    // Les dénominateurs ne sont pas multiples l'un de l'autre, il faut ajuster
    // les deux membres
-   } else {
+   } else if (tmpMembreDroite.denominateur != tmpMembreGauche.denominateur){
       if(debordementMultiplication(tmpMembreGauche.numerateur, tmpMembreDroite.denominateur))
          throw std::overflow_error("Il y a debordement lors de l'ajustement du "
                                  "numerateur de l'operande de gauche");
