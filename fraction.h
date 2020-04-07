@@ -11,6 +11,7 @@
  Compilateur : MinGW-g++ 6.3.0
  -----------------------------------------------------------------------------------
  */
+// TODO : ajouter les noexcep, documenter les exceptions
 #ifndef FRACTION_H
 #define FRACTION_H
 
@@ -42,6 +43,10 @@ class Fraction {
     */
     friend Fraction<T> operator * (const Fraction<T>& rhs) const;
 public:
+    /**
+     * Constructeur par défault
+     */
+    Fraction<T>() = default;
    /**
     * Crée une fraction
     * @param n le numérateur
