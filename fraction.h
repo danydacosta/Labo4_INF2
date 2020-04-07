@@ -18,6 +18,12 @@ template <typename T> class Fraction;
 
 template <typename T>
 std::ostream& operator <<(std::ostream& os, const Fraction<T>& rhs);
+template <typename T>
+Fraction<T> operator+ (const Fraction<T> lhs, const Fraction<T>& rhs);
+template <typename T>
+Fraction<T> operator* (const Fraction<T> lhs, const Fraction<T>& rhs);
+template <typename T>
+bool operator== (const Fraction<T> lhs, const Fraction<T>& rhs);
 
 template <typename T>
 class Fraction {
@@ -30,20 +36,21 @@ class Fraction {
      * @param f la fraction avec laquelle effectuer l'addition
      * @return La fraction représentant la somme
      */
-    friend Fraction<T> operator + (const Fraction<T> lhs, const Fraction<T>& rhs);
+
+    friend Fraction<T> operator+ <>(Fraction<T> lhs, const Fraction<T>& rhs);
     /**
     * Surcharge de l'opérateur de multiplication
     * @param f la fraction avec laquelle effectuer la multiplication
     * @return La fraction représentant le produit
     */
-    friend Fraction<T> operator * (const Fraction<T> lhs, const Fraction<T>& rhs);
+    friend Fraction<T> operator * <>(Fraction<T> lhs, const Fraction<T>& rhs);
 
     /**
      * Teste l'égalité numérique de deux fractions
      * @param f la fraction avec laquelle tester l'égalité numérique
      * @return si oui ou non les fractions sont égales
      */
-    friend bool operator== (const Fraction<T> lhs, const Fraction<T>& rhs);
+    friend bool operator== <>(const Fraction<T> lhs, const Fraction<T>& rhs);
 public:
     /**
      * Crée une fraction

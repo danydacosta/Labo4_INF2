@@ -88,7 +88,7 @@ bool debordementMultiplication(T a, T b) {
 }
 
 template<typename T>
-Fraction<T> operator+(const Fraction<T> lhs, const Fraction<T> &rhs){
+Fraction<T> operator+(Fraction<T> lhs, const Fraction<T> &rhs){
    return lhs += rhs;
 }
 
@@ -151,7 +151,7 @@ Fraction<T> &Fraction<T>::operator+=(const Fraction<T> &rhs) {
 }
 
 template<typename T>
-Fraction<T> operator*(const Fraction<T> lhs, const Fraction<T> &rhs) {
+Fraction<T> operator*(Fraction<T> lhs, const Fraction<T> &rhs) {
     return lhs *= rhs;
 }
 
@@ -170,10 +170,10 @@ Fraction<T> &Fraction<T>::operator*=(const Fraction<T> &rhs) {
    tmpMembreDroite.numerateur /= diagonaleDroite;
 
    if(debordementMultiplication(tmpMembreGauche.numerateur, tmpMembreDroite.numerateur))
-      throw std::out_of_range("Il y a debordement lors de la multiplication des "
+      throw std::overflow_error("Il y a debordement lors de la multiplication des "
                               "numerateurs");
    if(debordementMultiplication(tmpMembreGauche.denominateur, tmpMembreDroite.denominateur))
-      throw std::out_of_range("Il y a debordement lors de la multiplication des "
+      throw std::overflow_error("Il y a debordement lors de la multiplication des "
                               "denominateurs");
    tmpMembreGauche.numerateur *= tmpMembreDroite.numerateur;
    tmpMembreGauche.denominateur *= tmpMembreDroite.denominateur;
