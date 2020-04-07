@@ -40,7 +40,7 @@ Fraction<T>::operator double() const {
 /**
  * Détermine le plus grand diviseur commun de deux entiers a et b
  */
- template<typename T>
+template<typename T>
 T plusGrandDiviseurCommun(T a, T b) {
    if (!b)
       return a;
@@ -59,8 +59,8 @@ bool Fraction<T>::identite(const Fraction<T> &f) const {
 }
 
 template<typename T>
-bool Fraction<T>::operator==(const Fraction<T> &rhs) const {
-   return (float)*this == (float)rhs;
+bool operator == (const Fraction<T>& lhs, const Fraction<T>& rhs) {
+   return (float)lhs == (float)rhs;
 }
 
 template<typename T>
@@ -80,9 +80,9 @@ bool debordementMultiplication(T a, T b) {
 }
 
 template<typename T>
-Fraction<T> Fraction<T>::operator+(const Fraction<T> &rhs) const {
-   Fraction<T> tmp = *this;
-   return tmp += rhs;
+Fraction<T> operator + (Fraction<T> lhs, const Fraction<T>& rhs) {
+   lhs += rhs;
+   return lhs;
 }
 
 template<typename T>
@@ -144,9 +144,9 @@ Fraction<T> &Fraction<T>::operator+=(const Fraction<T> &rhs) {
 }
 
 template<typename T>
-Fraction<T> Fraction<T>::operator*(const Fraction<T> &rhs) const {
-   Fraction<T> tmp = *this;
-   return tmp *= rhs;
+Fraction<T> operator * (Fraction<T> lhs, const Fraction<T>& rhs) {
+   lhs *= rhs;
+   return lhs;
 }
 
 template<typename T>

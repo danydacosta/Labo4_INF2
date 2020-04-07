@@ -229,6 +229,18 @@ int main() {
       } catch(out_of_range& e) {
          cout << e.what() << endl;
       }
+      cout << "---" << endl;
+      Fraction<char> f5(-73, 61);
+      Fraction<char> f6(5, 7);
+      cout << "f5 = " << f5 << endl;
+      cout << "f6 = " << f6 << endl;
+      try {
+         cout << "f5 * f6 = ";
+         cout << (f5 * f6) << endl;
+      } catch(out_of_range& e) {
+         cout << e.what() << endl;
+      }
+      cout << "f5 = " << f5 << endl;
       cout << "************************************" << endl;
    }
 

@@ -5,13 +5,10 @@
  Auteur(s)   : Oliveira da Costa Dany, Pozniakoff Lev, Vallon Axel
  Date        : 10.04.2020
  But         : -
-
  Remarque(s) : -
-
  Compilateur : MinGW-g++ 6.3.0
  -----------------------------------------------------------------------------------
  */
-// TODO : ajouter les noexcep, documenter les exceptions
 #ifndef FRACTION_H
 #define FRACTION_H
 
@@ -23,16 +20,40 @@ template <typename T>
 std::ostream& operator <<(std::ostream& os, const Fraction<T>& rhs);
 
 template <typename T>
+Fraction<T> operator + (Fraction<T> lhs, const Fraction<T>& rhs);
+
+template <typename T>
+Fraction<T> operator * (Fraction<T> lhs, const Fraction<T>& rhs);
+
+template <typename T>
+bool operator == (const Fraction<T>& lhs, const Fraction<T>& rhs);
+
+template <typename T>
 class Fraction {
    /**
     * Surcharge de l'opérateur de flux pour affichage d'une fraction (non simplifié)
     */
    friend std::ostream& operator << <>(std::ostream& os, const Fraction<T>& rhs);
+   /**
+    * Surcharge de l'opérateur d'addition
+    * @param f la fraction avec laquelle effectuer l'addition
+    * @return La fraction représentant la somme
+    */
+   friend Fraction<T> operator + <>(Fraction<T> lhs, const Fraction<T>& rhs);
+   /**
+   * Surcharge de l'opérateur de multiplication
+   * @param f la fraction avec laquelle effectuer la multiplication
+   * @return La fraction représentant le produit
+   */
+   friend Fraction<T> operator * <>(Fraction<T> lhs, const Fraction<T>& rhs);
+
+   /**
+    * Teste l'égalité numérique de deux fractions
+    * @param f la fraction avec laquelle tester l'égalité numérique
+    * @return si oui ou non les fractions sont égales
+    */
+   friend bool operator == <>(const Fraction<T>& lhs, const Fraction<T>& rhs);
 public:
-    /**
-     * Constructeur par défault
-     */
-    Fraction<T>() = default;
    /**
     * Crée une fraction
     * @param n le numérateur
@@ -62,29 +83,11 @@ public:
     */
    bool identite(const Fraction<T>& f) const;
    /**
-    * Teste l'égalité numérique de deux fractions
-    * @param f la fraction avec laquelle tester l'égalité numérique
-    * @return si oui ou non les fractions sont égales
-    */
-   bool operator == (const Fraction<T>& rhs) const;
-   /**
-    * Surcharge de l'opérateur d'addition
-    * @param f la fraction avec laquelle effectuer l'addition
-    * @return La fraction représentant la somme
-    */
-   Fraction<T> operator + (const Fraction<T>& rhs) const;
-   /**
     * Surcharge de l'opérateur d'affectation composé +=
     * @param rhs la fraction avec laquelle effectuer l'addition
     * @return l'objet fraction courant dont on a ajouté rhs
     */
    Fraction<T>& operator += (const Fraction<T>& rhs);
-   /**
-    * Surcharge de l'opérateur de multiplication
-    * @param f la fraction avec laquelle effectuer la multiplication
-    * @return La fraction représentant le produit
-    */
-   Fraction<T> operator * (const Fraction<T>& rhs) const;
    /**
     * Surcharge de l'opérateur d'affectation composé *=
     * @param rhs la fraction avec laquelle effectuer la multiplication
