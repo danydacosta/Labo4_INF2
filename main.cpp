@@ -18,6 +18,8 @@
 
 using namespace std;
 
+void sommePiPremiereMethode();
+
 int main() {
    cout << "======== Debut du programme de test ========" << endl;
    {
@@ -245,6 +247,55 @@ int main() {
       cout << "f5 = " << f5 << endl;
       cout << "************************************" << endl;
    }
-
+   sommePiPremiereMethode();
    return EXIT_SUCCESS;
+}
+
+void sommePiPremiereMethode() {
+   unsigned j = 1;
+   {
+      cout << "******** Calcul de pi avec la premiere methode (int) ********" <<
+      endl;
+      Fraction<int> f1(4, 1);
+      Fraction<int> oppose(-1, 1);
+      for(unsigned i = 3; true; i += 2) {
+         try {
+            if(j % 2)
+               f1 += oppose * Fraction<int>(4, i);
+            else
+               f1 += Fraction<int>(4, i);
+            j++;
+         } catch (exception& e) {
+            cout << e.what() << endl;
+            break;
+         }
+      }
+      cout << "Nombre de termes additionnes : " << ++j << endl;
+      cout << "Fraction finale obtenue : " << f1 << endl;
+      cout << "Valeur approximative obtenue : " << (double)f1 << endl;
+      cout << "************************************" << endl;
+   }
+   {
+      cout << "******** Calcul de pi avec la premiere methode (long long) ********"
+      <<
+      endl;
+      Fraction<long long> f2(4, 1);
+      Fraction<long long> oppose(-1, 1);
+      for(unsigned i = 3; true; i += 2) {
+         try {
+            if(j % 2)
+               f2 += oppose * Fraction<long long>(4, i);
+            else
+               f2 += Fraction<long long>(4, i);
+            j++;
+         } catch (exception& e) {
+            cout << e.what() << endl;
+            break;
+         }
+      }
+      cout << "Nombre de termes additionnes : " << ++j << endl;
+      cout << "Fraction finale obtenue : " << f2 << endl;
+      cout << "Valeur approximative obtenue : " << (double)f2 << endl;
+      cout << "************************************" << endl;
+   }
 }

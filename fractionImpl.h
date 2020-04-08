@@ -151,6 +151,7 @@ Fraction<T> &Fraction<T>::operator*=(const Fraction<T> &rhs) {
 
 template<typename T>
 std::ostream &operator<<(std::ostream &os, const Fraction<T> &rhs) {
+   // TODO : cast explicite pour l'affichage des chars
    os << (long long) rhs.numerateur << " / " << (long long) rhs.denominateur;
    return os;
 }
