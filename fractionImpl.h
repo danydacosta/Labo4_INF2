@@ -20,12 +20,12 @@
 #include "fraction.h"
 
 template<typename T>
-Fraction<T>::Fraction(T n, T d) try : numerateur(n), denominateur(d) {
+Fraction<T>::Fraction(T n, T d) : numerateur(n), denominateur(d) {
    if (d < 0)
       throw std::invalid_argument("Le denominateur ne peut pas etre negatif");
    if (d == 0)
       throw std::invalid_argument("Le denominateur ne peut pas etre nul");
-} catch (std::invalid_argument &) {}
+}
 
 template<typename T>
 Fraction<T>::operator float() const {
@@ -64,19 +64,21 @@ bool operator==(const Fraction<T> &lhs, const Fraction<T> &rhs) {
 }
 
 template<typename T>
-bool debordementAddition(T a, T b) {
+void debordementAddition(T a, T b) {
    T res = a + b;
-   if (a > 0 && b > 0 && res < 0)
-      return true;
-   return a < 0 && b < 0 && res > 0;
+   const std::string MSG_ERREUR = "Debordement lors de l'addition des numerateurs";
+   if (a > 0 && b > 0 && res < 0) {
+      throw std::overflow_error(MSG_ERREUR);
+   } else if (a < 0 && b < 0 && res > 0) {
+      throw std::underflow_error(MSG_ERREUR);
+   }
 }
 
 template<typename T>
-bool debordementMultiplication(T a, T b) {
-   if (a == 0 || b == 0)
-      return false;
+void debordementMultiplication(T a, T b, const std::string& MSG_ERREUR) {
    T res = a * b;
-   return !(a == res / b);
+   if(!(a == res / b))
+      throw std::overflow_error(MSG_ERREUR);
 }
 
 template<typename T>
@@ -91,32 +93,28 @@ Fraction<T> &Fraction<T>::operator+=(const Fraction<T> &rhs) {
    Fraction<T> tmpMembreDroite = rhs.simplifier();
    T denomPGDC = plusGrandDiviseurCommun(tmpMembreDroite.denominateur,
                                          tmpMembreGauche.denominateur);
-   // Débordement ajustement dénominateur quand dénominateurs différents et pas
-   // multiples
-   if (debordementMultiplication(T(tmpMembreDroite.denominateur / denomPGDC),
-                                 tmpMembreGauche.denominateur)) {
-      throw std::overflow_error("debordement");
-   }
+   const std::string MSG_ERREUR_MULTIPLICATION = "Debordement de la "
+                                                 "multiplication lors de "
+                                                 "l'ajustement des termes";
+   // Débordement possible lors de la multiplication des dénominateurs dans le
+   // cas où les dénominateurs sont différents et pas multiples l'un de l'autre
+   debordementMultiplication(T(tmpMembreDroite.denominateur / denomPGDC),
+                                 tmpMembreGauche.denominateur, MSG_ERREUR_MULTIPLICATION);
 
-   // facteur d'ajustement des membres
+   // Calcul des facteurs d'ajustement de chaque fraction
    T facteurGauche = tmpMembreDroite.denominateur / denomPGDC;
    T facteurDroite = tmpMembreGauche.denominateur / denomPGDC;
-   // TODO : simplifier en mettant les throw dans debordement
-   if (debordementMultiplication((T) facteurGauche, tmpMembreGauche.numerateur)) {
-      throw std::overflow_error("debordement");
-   }
-   if (debordementMultiplication((T) facteurDroite, tmpMembreDroite.numerateur)) {
-      throw std::overflow_error("debordement");
-   }
+
+   debordementMultiplication((T) facteurGauche, tmpMembreGauche.numerateur, MSG_ERREUR_MULTIPLICATION);
+   debordementMultiplication((T) facteurDroite, tmpMembreDroite.numerateur, MSG_ERREUR_MULTIPLICATION);
    T numerateurGauche = (T)facteurGauche * tmpMembreGauche.numerateur;
    T numerateurDroite = (T)facteurDroite * tmpMembreDroite.numerateur;
 
-   if (debordementAddition(numerateurGauche, numerateurDroite)) {
-      throw std::overflow_error("debordement");
-   }
+   debordementAddition(numerateurGauche, numerateurDroite);
 
-   Fraction<T> resultat = { numerateurGauche + numerateurDroite,  tmpMembreGauche
-                            .denominateur / denomPGDC * tmpMembreDroite.denominateur };
+   Fraction<T> resultat = { T(numerateurGauche + numerateurDroite),
+                            T(facteurDroite * tmpMembreDroite.denominateur) };
+
    return *this = resultat.simplifier();
 }
 
@@ -140,14 +138,11 @@ Fraction<T> &Fraction<T>::operator*=(const Fraction<T> &rhs) {
    tmpMembreGauche.denominateur /= diagonaleDroite;
    tmpMembreDroite.numerateur /= diagonaleDroite;
 
-   if (debordementMultiplication(tmpMembreGauche.numerateur,
-                                 tmpMembreDroite.numerateur))
-      throw std::out_of_range("Il y a debordement lors de la multiplication des "
-                              "numerateurs");
-   if (debordementMultiplication(tmpMembreGauche.denominateur,
-                                 tmpMembreDroite.denominateur))
-      throw std::out_of_range("Il y a debordement lors de la multiplication des "
-                              "denominateurs");
+   debordementMultiplication(tmpMembreGauche.numerateur, tmpMembreDroite
+   .numerateur, "Debordement lors de la multiplication des numerateurs");
+   debordementMultiplication(tmpMembreGauche.denominateur, tmpMembreDroite
+   .denominateur, "Debordement lors de la multiplication des denominateurs");
+
    tmpMembreGauche.numerateur *= tmpMembreDroite.numerateur;
    tmpMembreGauche.denominateur *= tmpMembreDroite.denominateur;
    *this = tmpMembreGauche;
@@ -159,6 +154,4 @@ std::ostream &operator<<(std::ostream &os, const Fraction<T> &rhs) {
    os << (long long) rhs.numerateur << " / " << (long long) rhs.denominateur;
    return os;
 }
-
-
 #endif

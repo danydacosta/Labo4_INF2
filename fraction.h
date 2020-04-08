@@ -36,20 +36,22 @@ class Fraction {
    friend std::ostream& operator << <>(std::ostream& os, const Fraction<T>& rhs);
    /**
     * Surcharge de l'opérateur d'addition
-    * @param f la fraction avec laquelle effectuer l'addition
+    * @param lhs membre de gauche de l'addition
+    * @param rhs membre de droite de l'addition
     * @return La fraction représentant la somme
     */
    friend Fraction<T> operator + <>(Fraction<T> lhs, const Fraction<T>& rhs);
    /**
    * Surcharge de l'opérateur de multiplication
-   * @param f la fraction avec laquelle effectuer la multiplication
+   * @param lhs membre de gauche de la multiplication
+   * @param rhs membre de droite de la multiplication
    * @return La fraction représentant le produit
    */
    friend Fraction<T> operator * <>(Fraction<T> lhs, const Fraction<T>& rhs);
-
    /**
     * Teste l'égalité numérique de deux fractions
-    * @param f la fraction avec laquelle tester l'égalité numérique
+    * @param lhs membre de gauche du test d'égalité numérique
+    * @param rhs membre de droite du test d'égalité numérique
     * @return si oui ou non les fractions sont égales
     */
    friend bool operator == <>(const Fraction<T>& lhs, const Fraction<T>& rhs);

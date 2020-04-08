@@ -88,7 +88,7 @@ int main() {
       try {
          cout << "f1 += f2 : ";
          cout << (f1 += f2) << endl;
-      } catch(overflow_error& e) {
+      } catch(exception& e) {
          cout << e.what() << endl;
       }
       cout << "f1 = " << f1 << endl;
@@ -100,7 +100,7 @@ int main() {
       try {
          cout << "f3 += f4 : ";
          cout << (f3 += f4) << endl;
-      } catch(overflow_error& e) {
+      } catch(exception& e) {
          cout << e.what() << endl;
       }
       cout << "f3 = " << f3 << endl;
@@ -112,7 +112,7 @@ int main() {
       try {
          cout << "f5 += f6 : ";
          cout << (f5 += f6) << endl;
-      } catch(overflow_error& e) {
+      } catch(exception& e) {
          cout << e.what() << endl;
       }
       cout << "f5 = " << f5 << endl;
@@ -124,7 +124,7 @@ int main() {
       try {
          cout << "f7 += f8 : ";
          cout << (f7 += f8) << endl;
-      } catch(overflow_error& e) {
+      } catch(exception& e) {
          cout << e.what() << endl;
       }
       cout << "f7 = " << f7 << endl;
@@ -136,7 +136,7 @@ int main() {
       try {
          cout << "f9 += f10 : ";
          cout << (f9 += f10) << endl;
-      } catch(overflow_error& e) {
+      } catch(exception& e) {
          cout << e.what() << endl;
       }
       cout << "f9 = " << f9 << endl;
@@ -148,7 +148,7 @@ int main() {
       try {
          cout << "f11 += f12 : ";
          cout << (f11 += f12) << endl;
-      } catch(overflow_error& e) {
+      } catch(exception& e) {
          cout << e.what() << endl;
       }
       cout << "f11 = " << f11 << endl;
@@ -163,9 +163,10 @@ int main() {
       try {
          cout << "f1 + f2 = ";
          cout << (f1 + f2) << endl;
-      } catch(overflow_error& e) {
+      } catch(exception& e) {
          cout << e.what() << endl;
       }
+      cout << "f1 = " << f1 << endl;
       cout << "---" << endl;
       Fraction<char> f3(3, 6);
       Fraction<char> f4(-128, 3);
@@ -174,9 +175,10 @@ int main() {
       try {
          cout << "f3 + f4 = ";
          cout << (f3 + f4) << endl;
-      } catch(overflow_error& e) {
+      } catch(exception& e) {
          cout << e.what() << endl;
       }
+      cout << "f3 = " << f3 << endl;
       cout << "************************************" << endl;
    }
    {
@@ -188,7 +190,7 @@ int main() {
       try {
          cout << "f1 *= f2 : ";
          cout << (f1 *= f2) << endl;
-      } catch(out_of_range& e) {
+      } catch(exception& e) {
          cout << e.what() << endl;
       }
       cout << "f1 = " << f1 << endl;
@@ -200,7 +202,7 @@ int main() {
       try {
          cout << "f3 *= f4 : ";
          cout << (f3 *= f4) << endl;
-      } catch(out_of_range& e) {
+      } catch(exception& e) {
          cout << e.what() << endl;
       }
       cout << "f3 = " << f3 << endl;
@@ -215,7 +217,7 @@ int main() {
       try {
          cout << "f1 * f2 = ";
          cout << (f1 * f2) << endl;
-      } catch(out_of_range& e) {
+      } catch(exception& e) {
          cout << e.what() << endl;
       }
       cout << "---" << endl;
@@ -226,7 +228,7 @@ int main() {
       try {
          cout << "f3 * f4 = ";
          cout << (f3 * f4) << endl;
-      } catch(out_of_range& e) {
+      } catch(exception& e) {
          cout << e.what() << endl;
       }
       cout << "---" << endl;
@@ -237,7 +239,7 @@ int main() {
       try {
          cout << "f5 * f6 = ";
          cout << (f5 * f6) << endl;
-      } catch(out_of_range& e) {
+      } catch(exception& e) {
          cout << e.what() << endl;
       }
       cout << "f5 = " << f5 << endl;
