@@ -4,9 +4,10 @@
  Fichier     : fractionImpl.cpp
  Auteur(s)   : Oliveira da Costa Dany, Pozniakoff Lev, Vallon Axel
  Date        : 10.04.2020
- But         : -
+ But         : Définition des fonctions membres de la classe Fraction.
 
- Remarque(s) : -
+ Remarque(s) : Contient également trois autres fonctions non-membres ;
+ plusGrandDiviseurCommun(), debordementAddition(), debordementMultiplication().
 
  Compilateur : MinGW-g++ 6.3.0
  -----------------------------------------------------------------------------------
@@ -63,6 +64,10 @@ bool operator==(const Fraction<T> &lhs, const Fraction<T> &rhs) {
    return (float) lhs == (float) rhs;
 }
 
+/**
+ * Détermine si la somme de deux entiers a et b va déborder. Lance un exception
+ * si c'est le cas
+ */
 template<typename T>
 void debordementAddition(T a, T b) {
    T res = a + b;
@@ -74,6 +79,10 @@ void debordementAddition(T a, T b) {
    }
 }
 
+/**
+ * Détermine si le produit de deux entiers a et b va déborder. Lance un exception
+ * si c'est le cas
+ */
 template<typename T>
 void debordementMultiplication(T a, T b, const std::string& MSG_ERREUR) {
    T res = a * b;

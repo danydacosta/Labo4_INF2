@@ -4,8 +4,12 @@
  Fichier     : fraction.cpp
  Auteur(s)   : Oliveira da Costa Dany, Pozniakoff Lev, Vallon Axel
  Date        : 10.04.2020
- But         : -
+ But         : Déclaration de la classe Fraction, représentant une fraction avec
+ un numérateur et un dénominateur et permettant d'effectuer plusieurs opérations
+ arithmétiques et de simplification
+
  Remarque(s) : -
+
  Compilateur : MinGW-g++ 6.3.0
  -----------------------------------------------------------------------------------
  */

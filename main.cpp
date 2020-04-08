@@ -4,22 +4,49 @@
  Fichier     : main.cpp
  Auteur(s)   : Oliveira da Costa Dany, Pozniakoff Lev, Vallon Axel
  Date        : 10.04.2020
- But         : -
+ But         : Programme de test de la classe Fraction. Permet également de
+ calculer des approximations de pi grâce à deux séries.
 
  Remarque(s) : -
 
  Compilateur : MinGW-g++ 6.3.0
  -----------------------------------------------------------------------------------
  */
-#include "fraction.h"
-
 #include <cstdlib>
 #include <iostream>
+#include <iomanip>
+#include <typeinfo>
+
+#include "fraction.h"
 
 using namespace std;
-
+template <typename T>
 void sommePiPremiereMethode();
 
+template <typename T>
+void sommePiDeuxiemeMethode();
+
+/**
+ * -- Résultats obtenus de l'approximation de pi --
+ *
+ * Première méthode avec <int> :
+ * - Approximation obtenue : 3.05840276593
+ * - Nombre de décimales exactes : 0
+ *
+ * Première méthode avec <long long> :
+ * - Approximation obtenue : 3.17606517306
+ * - Nombre de décimales exactes : 1
+ *
+ * Deuxième méthode avec <int> :
+ * - Approximation obtenue : 3.14140671850
+ * - Nombre de décimales exactes : 2
+ *
+ * Deuxième méthode avec <long long> :
+ * - Approximation obtenue : 3.14160376182
+ * - Nombre de décimales exactes : 2
+ *
+ * Conclusion : la meilleure des deux est la deuxième méthode.
+ */
 int main() {
    cout << "======== Debut du programme de test ========" << endl;
    {
@@ -247,55 +274,55 @@ int main() {
       cout << "f5 = " << f5 << endl;
       cout << "************************************" << endl;
    }
-   sommePiPremiereMethode();
+   sommePiPremiereMethode<int>();
+   sommePiPremiereMethode<long long>();
+   sommePiDeuxiemeMethode<int>();
+   sommePiDeuxiemeMethode<long long>();
    return EXIT_SUCCESS;
 }
 
+template<typename T>
 void sommePiPremiereMethode() {
+   cout << "******** Calcul de pi avec la premiere methode (" << typeid(T).name() <<
+   ") ********" << endl;
+   Fraction<T> f1(4, 1);
+   Fraction<T> oppose(-1, 1);
    unsigned j = 1;
-   {
-      cout << "******** Calcul de pi avec la premiere methode (int) ********" <<
-      endl;
-      Fraction<int> f1(4, 1);
-      Fraction<int> oppose(-1, 1);
-      for(unsigned i = 3; true; i += 2) {
-         try {
-            if(j % 2)
-               f1 += oppose * Fraction<int>(4, i);
-            else
-               f1 += Fraction<int>(4, i);
-            j++;
-         } catch (exception& e) {
-            cout << e.what() << endl;
-            break;
-         }
-      }
-      cout << "Nombre de termes additionnes : " << ++j << endl;
-      cout << "Fraction finale obtenue : " << f1 << endl;
-      cout << "Valeur approximative obtenue : " << (double)f1 << endl;
-      cout << "************************************" << endl;
+   for(unsigned long long i = 3; true; i += 2) {
+      try {
+         if(j % 2)
+            f1 += oppose * Fraction<T>(4, i);
+         else
+            f1 += Fraction<T>(4, i);
+         j++;
+      } catch (exception& e) { break; }
    }
-   {
-      cout << "******** Calcul de pi avec la premiere methode (long long) ********"
-      <<
-      endl;
-      Fraction<long long> f2(4, 1);
-      Fraction<long long> oppose(-1, 1);
-      for(unsigned i = 3; true; i += 2) {
-         try {
-            if(j % 2)
-               f2 += oppose * Fraction<long long>(4, i);
-            else
-               f2 += Fraction<long long>(4, i);
-            j++;
-         } catch (exception& e) {
-            cout << e.what() << endl;
-            break;
-         }
-      }
-      cout << "Nombre de termes additionnes : " << ++j << endl;
-      cout << "Fraction finale obtenue : " << f2 << endl;
-      cout << "Valeur approximative obtenue : " << (double)f2 << endl;
-      cout << "************************************" << endl;
+   cout << "Nombre de termes additionnes : " << j << endl;
+   cout << "Fraction finale obtenue : " << f1 << endl;
+   cout << "Valeur approximative obtenue : " << fixed << setprecision(11) <<
+        (double)f1 << endl;
+   cout << "***********************************************************" << endl;
+}
+
+template<typename T>
+void sommePiDeuxiemeMethode() {
+   cout << "******** Calcul de pi avec la deuxieme methode (" << typeid(T).name() <<
+        ") ********" << endl;
+   Fraction<T> f1(3, 1);
+   Fraction<T> oppose(-1, 1);
+   unsigned j = 1;
+   for(unsigned long long i = 2; true; i += 2) {
+      try {
+         if(j % 2)
+            f1 += Fraction<T>(4, i * (i + 1) * (i + 2));
+         else
+            f1 += oppose * Fraction<T>(4, i * (i + 1) * (i + 2));
+         j++;
+      } catch (exception& e) { break; }
    }
+   cout << "Nombre de termes additionnes : " << j << endl;
+   cout << "Fraction finale obtenue : " << f1 << endl;
+   cout << "Valeur approximative obtenue : " << fixed << setprecision(11) <<
+        (double)f1 << endl;
+   cout << "***********************************************************" << endl;
 }
