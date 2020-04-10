@@ -16,6 +16,7 @@
 #include <iostream>
 #include <iomanip>
 #include <typeinfo>
+#include <cstring>
 
 #include "fraction.h"
 
@@ -283,7 +284,8 @@ int main() {
 
 template<typename T>
 void sommePiPremiereMethode() {
-   cout << "******** Calcul de pi avec la premiere methode (" << typeid(T).name() <<
+   string nomType = !strncmp(typeid(T).name(), "i", 1) ? "int" : "long long";
+   cout << "******** Calcul de pi avec la premiere methode (" << nomType <<
    ") ********" << endl;
    Fraction<T> f1(4, 1);
    Fraction<T> oppose(-1, 1);
@@ -306,7 +308,8 @@ void sommePiPremiereMethode() {
 
 template<typename T>
 void sommePiDeuxiemeMethode() {
-   cout << "******** Calcul de pi avec la deuxieme methode (" << typeid(T).name() <<
+   string nomType = !strncmp(typeid(T).name(), "i", 1) ? "int" : "long long";
+   cout << "******** Calcul de pi avec la deuxieme methode (" << nomType <<
         ") ********" << endl;
    Fraction<T> f1(3, 1);
    Fraction<T> oppose(-1, 1);
