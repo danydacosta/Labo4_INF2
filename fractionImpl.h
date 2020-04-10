@@ -99,7 +99,7 @@ void debordementMultiplication(T a, T b, const std::string& MSG_ERREUR) {
 }
 
 template<typename T>
-Fraction<T> operator+(Fraction<T> lhs, const Fraction<T> &rhs){
+Fraction<T> operator+(Fraction<T> lhs, const Fraction<T> &rhs) {
    return lhs += rhs;
 }
 
@@ -136,22 +136,37 @@ Fraction<T> &Fraction<T>::operator+=(const Fraction<T> &rhs) {
 
 template<typename T>
 Fraction<T> operator*(Fraction<T> lhs, const Fraction<T> &rhs) {
-    return lhs *= rhs;
+   return lhs *= rhs;;
 }
 
 template<typename T>
 Fraction<T> &Fraction<T>::operator*=(const Fraction<T> &rhs) {
+    //simplification des membre pour réduire les chances d'overflow
    Fraction<T> tmpMembreGauche = simplifier();
    Fraction<T> tmpMembreDroite = rhs.simplifier();
-
+/*
+   //mise à niveau des numerateurs au meme denominateur
    T diagonaleGauche = plusGrandDiviseurCommun((T) abs(tmpMembreGauche.numerateur),
                                                tmpMembreDroite.denominateur);
    tmpMembreGauche.numerateur /= diagonaleGauche;
    tmpMembreDroite.denominateur /= diagonaleGauche;
+
    T diagonaleDroite = plusGrandDiviseurCommun(tmpMembreGauche.denominateur,
                                                (T) abs(tmpMembreDroite.numerateur));
    tmpMembreGauche.denominateur /= diagonaleDroite;
    tmpMembreDroite.numerateur /= diagonaleDroite;
+*/
+
+    Fraction <T> diagonaleGauche(tmpMembreGauche.numerateur, tmpMembreDroite.denominateur);
+    diagonaleGauche = diagonaleGauche.simplifier();
+    Fraction <T> diagonaleDroite(tmpMembreDroite.numerateur, tmpMembreGauche.denominateur);
+    diagonaleDroite = diagonaleDroite.simplifier();
+
+    tmpMembreGauche.numerateur = diagonaleGauche.numerateur;
+    tmpMembreGauche.denominateur =diagonaleDroite.denominateur;
+    tmpMembreDroite.numerateur = diagonaleDroite.numerateur;
+    tmpMembreDroite.denominateur =diagonaleGauche.denominateur;
+
 
    debordementMultiplication(tmpMembreGauche.numerateur, tmpMembreDroite
    .numerateur, "Debordement lors de la multiplication des numerateurs");

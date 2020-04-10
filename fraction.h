@@ -42,6 +42,7 @@ class Fraction {
     * Surcharge de l'opérateur de flux pour affichage d'une fraction (non simplifié)
     */
    friend std::ostream& operator << <>(std::ostream& os, const Fraction<T>& rhs);
+
    /**
     * Surcharge de l'opérateur d'addition
     * @param lhs membre de gauche de l'addition
