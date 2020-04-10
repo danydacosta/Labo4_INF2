@@ -25,15 +25,14 @@ template <typename T>
 Fraction<T> operator+ (const Fraction<T> lhs, const Fraction<T>& rhs);
 template <typename T>
 Fraction<T> operator* (const Fraction<T> lhs, const Fraction<T>& rhs);
+
 template <typename T>
 bool operator== (const Fraction<T> lhs, const Fraction<T>& rhs);
 
 template <typename T>
 Fraction<T> operator + (Fraction<T> lhs, const Fraction<T>& rhs);
-
 template <typename T>
 Fraction<T> operator * (Fraction<T> lhs, const Fraction<T>& rhs);
-
 template <typename T>
 bool operator == (const Fraction<T>& lhs, const Fraction<T>& rhs);
 
