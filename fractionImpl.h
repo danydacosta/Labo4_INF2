@@ -92,16 +92,18 @@ void debordementAddition(T a, T b) {
  * si c'est le cas
  */
 template<typename T>
-void debordementMultiplication(T a, T b, const std::string& MSG_ERREUR) {
+T debordementMultiplication(T a, T b, const std::string& MSG_ERREUR) {
    T res = a * b;
    if(!(a == res / b))
       throw std::overflow_error(MSG_ERREUR);
+   return res;
 }
 
 template<typename T>
 Fraction<T> operator+(Fraction<T> lhs, const Fraction<T> &rhs) {
    return lhs += rhs;
 }
+
 
 template<typename T>
 Fraction<T> &Fraction<T>::operator+=(const Fraction<T> &rhs) {
@@ -144,38 +146,19 @@ Fraction<T> &Fraction<T>::operator*=(const Fraction<T> &rhs) {
     //simplification des membre pour réduire les chances d'overflow
    Fraction<T> tmpMembreGauche = simplifier();
    Fraction<T> tmpMembreDroite = rhs.simplifier();
-/*
-   //mise à niveau des numerateurs au meme denominateur
-   T diagonaleGauche = plusGrandDiviseurCommun((T) abs(tmpMembreGauche.numerateur),
-                                               tmpMembreDroite.denominateur);
-   tmpMembreGauche.numerateur /= diagonaleGauche;
-   tmpMembreDroite.denominateur /= diagonaleGauche;
 
-   T diagonaleDroite = plusGrandDiviseurCommun(tmpMembreGauche.denominateur,
-                                               (T) abs(tmpMembreDroite.numerateur));
-   tmpMembreGauche.denominateur /= diagonaleDroite;
-   tmpMembreDroite.numerateur /= diagonaleDroite;
-*/
+    //On intervertit les attributs de rhs et this pour les simplifier "en croix"
+    //pour réduire les chances d'overflow
+    std::swap(tmpMembreDroite.numerateur, tmpMembreGauche.numerateur);
+    tmpMembreDroite.simplifier();
+    tmpMembreGauche.simplifier();
 
-    Fraction <T> diagonaleGauche(tmpMembreGauche.numerateur, tmpMembreDroite.denominateur);
-    diagonaleGauche = diagonaleGauche.simplifier();
-    Fraction <T> diagonaleDroite(tmpMembreDroite.numerateur, tmpMembreGauche.denominateur);
-    diagonaleDroite = diagonaleDroite.simplifier();
-
-    tmpMembreGauche.numerateur = diagonaleGauche.numerateur;
-    tmpMembreGauche.denominateur =diagonaleDroite.denominateur;
-    tmpMembreDroite.numerateur = diagonaleDroite.numerateur;
-    tmpMembreDroite.denominateur =diagonaleGauche.denominateur;
-
-
-   debordementMultiplication(tmpMembreGauche.numerateur, tmpMembreDroite
+   //verification des debordements possibles lors de la multiplication
+   //la fonction debordement renvoie le resultat s'il n'y a pas de debordement
+   this->numerateur = debordementMultiplication(tmpMembreGauche.numerateur, tmpMembreDroite
    .numerateur, "Debordement lors de la multiplication des numerateurs");
-   debordementMultiplication(tmpMembreGauche.denominateur, tmpMembreDroite
+   this->denominateur = debordementMultiplication(tmpMembreGauche.denominateur, tmpMembreDroite
    .denominateur, "Debordement lors de la multiplication des denominateurs");
-
-   tmpMembreGauche.numerateur *= tmpMembreDroite.numerateur;
-   tmpMembreGauche.denominateur *= tmpMembreDroite.denominateur;
-   *this = tmpMembreGauche;
    return *this;
 }
 
