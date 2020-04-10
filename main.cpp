@@ -34,16 +34,16 @@ void sommePiDeuxiemeMethode();
  * - Nombre de décimales exactes : 0
  *
  * Première méthode avec <long long> :
- * - Approximation obtenue : 3.17606517306
+ * - Approximation obtenue : 3.18505041535
  * - Nombre de décimales exactes : 1
  *
  * Deuxième méthode avec <int> :
  * - Approximation obtenue : 3.14140671850
- * - Nombre de décimales exactes : 2
+ * - Nombre de décimales exactes : 3
  *
  * Deuxième méthode avec <long long> :
- * - Approximation obtenue : 3.14160376182
- * - Nombre de décimales exactes : 2
+ * - Approximation obtenue : 3.14157215448
+ * - Nombre de décimales exactes : 4
  *
  * Conclusion : la meilleure des deux est la deuxième méthode.
  */
@@ -284,11 +284,11 @@ int main() {
 template<typename T>
 void sommePiPremiereMethode() {
    cout << "******** Calcul de pi avec la premiere methode (" << typeid(T).name() <<
-   ") ********" << endl;
+        ") ********" << endl;
    Fraction<T> f1(4, 1);
    Fraction<T> oppose(-1, 1);
    unsigned j = 1;
-   for(unsigned long long i = 3; true; i += 2) {
+   for(T i = 3; true; i += 2) {
       try {
          if(j % 2)
             f1 += oppose * Fraction<T>(4, i);
@@ -311,7 +311,7 @@ void sommePiDeuxiemeMethode() {
    Fraction<T> f1(3, 1);
    Fraction<T> oppose(-1, 1);
    unsigned j = 1;
-   for(unsigned long long i = 2; true; i += 2) {
+   for(T i = 2; true; i += 2) {
       try {
          if(j % 2)
             f1 += Fraction<T>(4, i * (i + 1) * (i + 2));
